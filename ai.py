@@ -8,8 +8,6 @@ load_dotenv()
 api_key: str = os.getenv("GEMINI_API_KEY", "No API Key Found")
 
 client: genai.Client = genai.Client(api_key=api_key)
-print(f"Client initialized | {api_key[:13:]}")
-
 
 def generate_craft(first_element: str, second_element: str) -> str | None:
     system_instruction: str = (
