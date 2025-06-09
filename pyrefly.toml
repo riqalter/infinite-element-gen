@@ -1,0 +1,4 @@
+project-includes = ["**/*"]
+project-excludes = [
+    "**/*venv/**/*"
+]
