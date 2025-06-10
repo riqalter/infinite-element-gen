@@ -1,5 +1,4 @@
 from fastapi import FastAPI, HTTPException, APIRouter
-from fastapi.openapi.docs import get_swagger_ui_html
 from cache import get_cached_response, cache_response
 from models import CraftingRequest, CraftingResponse
 from ai import generate_craft
