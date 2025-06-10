@@ -8,7 +8,11 @@ import json
 app: FastAPI = FastAPI(
     title="Element Craft API",
     description="An API for generating whimsical crafting combinations using AI.",
-    version="1.0.0"
+    version="1.0.0",
+    swagger_ui_parameters={
+        ""
+        "syntaxHighlight": {"theme": "obsidian"},
+    }
 )
 
 @app.post("/craft", response_model=CraftingResponse)
@@ -21,8 +25,8 @@ def combine_elements(req: CraftingRequest) -> CraftingResponse:
         print(f"Cache miss for {req.first_element} and {req.second_element}")
     
     try:
-        genai_response = generate_craft(req.first_element, req.second_element)
-        parsed = json.loads(genai_response)
+        genai_response: str | None = generate_craft(req.first_element, req.second_element)
+        parsed = json.loads(genai_response) 
     except Exception as e:
         raise HTTPException(
             status_code=500,
@@ -35,7 +39,9 @@ def combine_elements(req: CraftingRequest) -> CraftingResponse:
 
 @app.get("/", tags=["Root"])
 def read_root() -> dict[str, str]:
-    return {"message": "Welcome to the Element Craft API! Use the /craft endpoint to combine elements."}
+    return {
+        "message": "Visit /docs for API documentation."
+    }
 
 if __name__ == "__main__":
     import uvicorn
