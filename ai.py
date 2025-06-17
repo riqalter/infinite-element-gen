@@ -9,6 +9,7 @@ api_key: str = os.getenv("GEMINI_API_KEY", "No API Key Found")
 
 client: genai.Client = genai.Client(api_key=api_key)
 
+
 def generate_craft(first_element: str, second_element: str) -> str | None:
     system_instruction: str = (
         "You are a whimsical crafting game AI. The user will give you two items, and your task is to "
@@ -21,11 +22,8 @@ def generate_craft(first_element: str, second_element: str) -> str | None:
 
     schema: dict[str, dict[str, dict[str, str]] | list[str] | str] = {
         "type": "OBJECT",
-        "properties": {
-            "result": {"type": "STRING"},
-            "emoji": {"type": "STRING"}
-        },
-        "required": ["result", "emoji"]
+        "properties": {"result": {"type": "STRING"}, "emoji": {"type": "STRING"}},
+        "required": ["result", "emoji"],
     }
 
     response: types.GenerateContentResponse = client.models.generate_content(
@@ -37,7 +35,7 @@ def generate_craft(first_element: str, second_element: str) -> str | None:
             response_schema=schema,
             temperature=0.7,
             seed=42,
-        )
+        ),
     )
-    
+
     return response.text
